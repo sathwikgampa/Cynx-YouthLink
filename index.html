@@ -28,6 +28,110 @@
         .text-glow-primary {
             text-shadow: 0 0 15px rgba(255, 184, 105, 0.3);
         }
+        /* Privacy Screen */
+        .privacy-screen {
+          display: none;
+          min-height: 100vh;
+          padding: 40px 20px;
+          background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+        
+        .privacy-header {
+          max-width: 1100px;
+          margin: 0 auto 28px;
+        }
+        
+        .privacy-header h1 {
+          font-size: 2.4rem;
+          color: #0f172a;
+        }
+        
+        .privacy-header p {
+          color: #64748b;
+          margin-top: 6px;
+        }
+        
+        .privacy-grid {
+          max-width: 1100px;
+          margin: auto;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 22px;
+        }
+        
+        .privacy-card {
+          background: white;
+          padding: 22px;
+          border-radius: 22px;
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+        }
+        
+        .privacy-card h3 {
+          margin-bottom: 12px;
+          color: #1e293b;
+        }
+        
+        .privacy-card ul {
+          padding-left: 18px;
+          color: #475569;
+          line-height: 2;
+        }
+        
+        @media (max-width: 900px) {
+          .main-grid {
+            grid-template-columns: 1fr;
+          }
+        
+          .topbar {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+        /* Simple Interactive Privacy Notes */
+        .notes-toolbar {
+          max-width: 1100px;
+          margin: 0 auto 20px;
+        }
+        
+        .add-note-btn {
+          background: #6366f1;
+          color: white;
+          border: none;
+          padding: 12px 18px;
+          border-radius: 14px;
+          font-size: 15px;
+          cursor: pointer;
+          transition: 0.2s;
+        }
+        
+        .add-note-btn:hover {
+          background: #4f46e5;
+        }
+        
+        .quick-notes-container {
+          max-width: 800px;
+          margin: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        
+        .quick-note-box {
+          min-height: 160px;
+          background: #fff8dc;
+          border-radius: 18px;
+          padding: 18px;
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+          outline: none;
+          font-size: 15px;
+          line-height: 1.7;
+          color: #374151;
+          border: 1px solid #facc15;
+        }
+        
+        .quick-note-box:focus {
+          box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.25);
+        }
     </style>
 <script id="tailwind-config">
         tailwind.config = {
@@ -91,6 +195,37 @@
                     borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
             },
+        }
+        // Quick Hide with Ctrl+q
+        document.addEventListener("keydown", function (e) {
+          if (e.key.toLowerCase() === "q" && e.ctrlKey) {
+            privacyMode = !privacyMode;
+        
+            const app = document.getElementById("app");
+            const privacyScreen = document.getElementById("privacyScreen");
+        
+            if (privacyMode) {
+              app.style.display = "none";
+              privacyScreen.style.display = "block";
+              document.title = "Quick Notes";
+            } else {
+              app.style.display = "block";
+              privacyScreen.style.display = "none";
+              document.title = originalTitle;
+            }
+          }
+        });
+        
+        // Add new quick note box in privacy mode
+        function addQuickBox() {
+          const container = document.getElementById("quickNotesContainer");
+        
+          const newBox = document.createElement("div");
+          newBox.className = "quick-note-box";
+          newBox.setAttribute("contenteditable", "true");
+          newBox.innerText = "New note...";
+        
+          container.appendChild(newBox);
         }
     </script>
 </head>
@@ -212,6 +347,21 @@
                         <a class="underline" href="#">Privacy Guidelines</a>.
                     </p>
 </div>
+</div>
+<!-- PRIVACY COVER SCREEN -->
+<div id="privacyScreen" class="privacy-screen">
+  <div class="privacy-header">
+    <h1>Quick Notes</h1>
+  </div>
+
+  <div class="notes-toolbar">
+    <button class="add-note-btn" onclick="addQuickBox()">+ Add New Note Box</button>
+  </div>
+
+  <div id="quickNotesContainer" class="quick-notes-container">
+    <div class="quick-note-box" contenteditable="true">MOVIES:<br>Gladiator<br>God Father<br>Memento<br>Kill Bill<br>Lord of Rings<br>Drive<br>Ford vs Ferrari</div>
+    <div class="quick-note-box" contenteditable="true">SERIES:<br>Dark<br>Breaking bad<br>Game of Thrones<br>Peaky Blinders<br>13 Reasons why</div>
+  </div>
 </div>
 </div>
 </main>
