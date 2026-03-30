@@ -5,6 +5,7 @@ const StudentSchedule = () => {
   const [events, setEvents] = useState([]);
   const [newTitle, setNewTitle] = useState('');
   const [newDate, setNewDate] = useState('');
+  const [newStartTime, setNewStartTime] = useState(''); // New state for start time
   const [newEndTime, setNewEndTime] = useState(''); // New state for end time
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -66,8 +67,8 @@ const StudentSchedule = () => {
       const updatedEvents = events.map(event => {
         // If event is today, has an end time, and hasn't been notified yet
         if (event.date === todayStr && event.endTime && !event.notified) {
-          // If the current time is greater than or equal to the event's end time
-          if (currentTimeStr >= event.endTime) {
+          // If the current time is greater than the event's end time
+          if (currentTimeStr > event.endTime) {
             // Trigger the check-in alert
             window.alert(`Hey, you just finished your ${event.title} exam! Take a deep breath. How are you feeling about it?`);
             hasUpdates = true;
@@ -89,26 +90,34 @@ const StudentSchedule = () => {
   // Core Logic: Add an event
   const addEvent = (e) => {
     e.preventDefault();
-    if (!newTitle.trim() || !newDate || !newEndTime) return;
+    if (!newTitle.trim() || !newDate || !newStartTime || !newEndTime) return;
+
+    const year = newDate.split('-')[0];
+    if (year.length > 4) {
+      window.alert("Please enter a valid 4-digit year.");
+      return;
+    }
 
     const newEvent = {
       id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
       title: newTitle.trim(),
       date: newDate,
+      startTime: newStartTime,
       endTime: newEndTime,
       notified: false // Initialized to false
     };
 
     // Sort events by date and time ascending 
     const updatedEvents = [...events, newEvent].sort((a, b) => {
-      const dateA = new Date(`${a.date}T${a.endTime || '00:00'}`);
-      const dateB = new Date(`${b.date}T${b.endTime || '00:00'}`);
+      const dateA = new Date(`${a.date}T${a.startTime || '00:00'}`);
+      const dateB = new Date(`${b.date}T${b.startTime || '00:00'}`);
       return dateA - dateB;
     });
     
     setEvents(updatedEvents);
     setNewTitle('');
     setNewDate('');
+    setNewStartTime('');
     setNewEndTime('');
   };
 
@@ -118,13 +127,22 @@ const StudentSchedule = () => {
   };
 
   // Helper to nicely format dates
-  const formatDate = (dateString, endTime) => {
+  const formatDate = (dateString, startTime, endTime) => {
     if (!dateString) return '';
     const dateObj = new Date(dateString + 'T00:00:00'); // Ensure it reads as local block
     const formattedDate = dateObj.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
     
-    // Output format: "Mar 30 • Ends at 14:00"
-    return endTime ? `${formattedDate} • Ends at ${endTime}` : formattedDate;
+    const formatTimeStr = (timeStr) => {
+      if (!timeStr) return '';
+      const [hours, minutes] = timeStr.split(':');
+      const h = parseInt(hours, 10);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 || 12;
+      return `${h12}:${minutes} ${ampm}`;
+    };
+
+    // Output format: "Mar 30 • 10:00 AM - 12:00 PM"
+    return startTime && endTime ? `${formattedDate} • ${formatTimeStr(startTime)} - ${formatTimeStr(endTime)}` : formattedDate;
   };
 
   // Clean, inline styles for a self-contained component
@@ -271,12 +289,19 @@ const StudentSchedule = () => {
             onChange={(e) => setNewTitle(e.target.value)}
             required
           />
+          <input 
+            type="date" 
+            style={styles.input}
+            value={newDate}
+            onChange={(e) => setNewDate(e.target.value)}
+            required
+          />
           <div style={styles.inputRow}>
             <input 
-              type="date" 
+              type="time" 
               style={{...styles.input, ...styles.inputFlex}}
-              value={newDate}
-              onChange={(e) => setNewDate(e.target.value)}
+              value={newStartTime}
+              onChange={(e) => setNewStartTime(e.target.value)}
               required
             />
             <input 
@@ -308,7 +333,7 @@ const StudentSchedule = () => {
               <li key={event.id} style={styles.listItem}>
                 <div style={styles.eventInfo}>
                   <p style={styles.eventTitle}>{event.title}</p>
-                  <p style={styles.eventDate}>{formatDate(event.date, event.endTime)}</p>
+                  <p style={styles.eventDate}>{formatDate(event.date, event.startTime, event.endTime)}</p>
                 </div>
                 <button 
                   style={styles.deleteButton}
