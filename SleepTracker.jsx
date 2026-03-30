@@ -46,7 +46,14 @@ const SleepTracker = () => {
     
     // Hackathon Trigger: Alert if sleep is under 5 hours (300 mins)
     if (diffMins < 300) {
-      window.alert("Sleep debt detected (< 5 hours). Should we check your academic schedule?");
+      const messages = [
+        "Sleep debt detected. Your academic schedule shows upcoming pressure—remember to take a break.",
+        "You've slept less than 5 hours. Research shows rest improves exam performance more than all-nighters!",
+        "Low recovery detected. Would you like to try a 2-minute mindful breathing exercise?",
+        "Alert: High sleep debt. Your wellbeing is our priority; consider shifting your study window."
+      ];
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      window.alert(randomMsg);
     }
   };
 
