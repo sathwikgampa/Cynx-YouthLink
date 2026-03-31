@@ -113,11 +113,11 @@
     <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
       <a href="index.html" class="text-2xl font-bold tracking-tighter text-[#ffb869] font-headline hover:opacity-80 transition-opacity">YouthLink</a>
       <nav class="hidden md:flex items-center space-x-8">
-        <a class="font-headline text-slate-300 hover:text-white transition-colors" href="#">Our Mission</a>
-        <a class="font-headline text-slate-300 hover:text-white transition-colors" href="#">How it Works</a>
-        <a class="font-headline text-slate-300 hover:text-white transition-colors" href="#">Resources</a>
+        <a class="font-headline text-slate-300 hover:text-white transition-colors" href="javascript:openOverlay('mission')">Our Mission</a>
+        <a class="font-headline text-slate-300 hover:text-white transition-colors" href="javascript:openOverlay('works')">How it Works</a>
+        <a class="font-headline text-slate-300 hover:text-white transition-colors" href="javascript:openOverlay('resources')">Resources</a>
       </nav>
-      <button
+      <button onclick="openOverlay('help')"
         class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold tracking-tight scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(255,184,105,0.3)]">Get
         Help</button>
     </div>
@@ -274,6 +274,13 @@
 
   <!-- Overlays / Modals -->
   <div id="overlay-container" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 backdrop-blur-3xl bg-background/60">
+    <div class="glass-panel p-12 rounded-[3.5rem] border border-white/10 max-w-5xl w-full relative animate-in fade-in zoom-in duration-500 overflow-y-auto max-h-[90vh]">
+      <button onclick="closeOverlay()" class="absolute top-8 right-8 w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 hover:text-white transition-all hover:rotate-90">
+        <span class="material-symbols-outlined text-2xl">close</span>
+      </button>
+      <div id="overlay-inner-content" class="space-y-10">
+        <!-- Content injected via JS -->
+      </div>
     </div>
   </div>
 
