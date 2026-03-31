@@ -28,7 +28,7 @@ By providing anonymous help-seeking channels and early intervention mechanisms, 
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend:** Next.js 16, HTML5, and Tailwind CSS for a blazing fast, responsive, "Anti-Gravity" professional user interface.
+- **Frontend:** Next.js 16, HTML5, and Tailwind CSS for a blazing fast, responsive, cinematic professional user interface.
 - **Backend:** Node.js & FastAPI for heavy secure data processing and hosting the AI-driven "Nature Prediction" analysis.
 - **Real-Time Uplink:** WebSockets to dynamically power anonymous 1-1 networking and instant communication.
 - **Database Architecture:** PostgreSQL for strictly managing structured, encrypted telemetry data on youth wellbeing indicators.
@@ -45,7 +45,7 @@ By providing anonymous help-seeking channels and early intervention mechanisms, 
 
 ## 🛠️ Tech Stack & Architecture
 
-- **Frontend:** HTML5, CSS3, TailwindCSS (for the "Anti-Gravity" glassmorphic UI).
+- **Frontend:** HTML5, CSS3, TailwindCSS (for the cinematic glassmorphic UI).
 - **Core Engine:** User Intelligence Engine (UIE) v4.0 (JavaScript).
 - **Security:** AES-256 local-only storage, Ctrl+Q Privacy Mode.
 - **Mentor Logic:** Real-time triage and NGO oversight protocols.

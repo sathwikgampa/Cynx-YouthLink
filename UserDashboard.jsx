@@ -46,7 +46,7 @@ const SleepTracker = () => {
         <h3 className="text-xl font-bold font-['Manrope'] text-slate-100">Rest Metric</h3>
       </header>
       <div className="relative flex flex-col items-center justify-center h-48">
-        {/* Anti-Gravity Ring */}
+        {/* Cinematic Pulse Ring */}
         <div className="absolute inset-0 border-4 border-teal-500/5 rounded-full"></div>
         <div className="absolute inset-2 border-2 border-teal-500/10 border-t-teal-500 rounded-full animate-spin duration-[10s]"></div>
         <div className="text-center z-10">
